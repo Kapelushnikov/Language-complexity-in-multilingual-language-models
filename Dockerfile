@@ -68,7 +68,8 @@ RUN conda create -n $CONDA_ENV python=$PYTHON_VERSION \
   && conda run -n $CONDA_ENV pip install ipykernel
 
 # Install project dependencies
-COPY pyproject.toml poetry.lock .
+COPY pyproject.toml .
+COPY poetry.lock .
 RUN conda run -n $CONDA_ENV poetry install
 
 CMD conda run -n base jupyter notebook --ip 0.0.0.0 --allow-root --no-browser

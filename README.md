@@ -1,3 +1,22 @@
+# Structure
+```
+.
+├── Dockerfile
+├── LICENSE
+├── README.md
+├── infer.py - inference of model
+├── requirements.txt
+├── start.sh - perform this to compile Docker image and launch a container
+├── train.py - model training. Perform it before launching infer.py
+└── utils
+    ├── __init__.py
+    ├── correlation_analysis.py — crosslayer similarity metrics
+    ├── evaluation.py — sidekick functions for getting predictions etc
+    ├── load_dataset.py — methods for loading data from sources and processing them into a format suitable for training/inference
+    └── metrics.py — metrics for evaluating the model's performance
+
+```
+
 # Language complexity in multilingual language models
 
 This repo contains files of experiments related to my thesis project.

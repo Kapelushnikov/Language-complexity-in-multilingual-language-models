@@ -13,13 +13,13 @@ def load_data_ReadMe(language="en") -> pd.DataFrame:
     data = pd.concat(
         [
             pd.read_excel(
-                f"/data/readme/dataset/{language}/readme_{language}_train.xlsx"
+                f"./data/readme/dataset/{language}/readme_{language}_train.xlsx"
             ),
             pd.read_excel(
-                f"/data/readme/dataset/{language}/readme_{language}_val.xlsx"
+                f"./data/readme/dataset/{language}/readme_{language}_val.xlsx"
             ),
             pd.read_excel(
-                f"/data/readme/dataset/{language}/readme_{language}_test.xlsx"
+                f"./data/readme/dataset/{language}/readme_{language}_test.xlsx"
             ),
         ],
         axis=0,
@@ -28,7 +28,7 @@ def load_data_ReadMe(language="en") -> pd.DataFrame:
 
 
 def make_dataloader_ReadMe(
-    data: pd.DataFrame, n_samples_per_class=40, batch_size=3
+    data: pd.DataFrame, batch_size=3, n_samples_per_class=None
 ) -> DataLoader:
     label_dict = {1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5}
 
@@ -36,14 +36,15 @@ def make_dataloader_ReadMe(
     data_lang["text"] = data["Sentence"]
     data_lang["label"] = data["Rating"].replace(label_dict)
 
-    samples_list = []
-    for label in label_dict.values():
-        samples = data_lang[data_lang["label"] == label].sample(
-            n=n_samples_per_class, replace=False
-        )
-        samples_list.append(samples)
+    if n_samples_per_class is not None:
+        samples_list = []
+        for label in label_dict.values():
+            samples = data_lang[data_lang["label"] == label].sample(
+                n=n_samples_per_class, replace=False
+            )
+            samples_list.append(samples)
 
-    data_lang = pd.concat(samples_list)
+        data_lang = pd.concat(samples_list)
 
     encoded_lang = tokenizer.batch_encode_plus(
         data_lang["text"].values,

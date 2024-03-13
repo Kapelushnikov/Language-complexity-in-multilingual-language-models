@@ -16,7 +16,4 @@ WORKDIR $PROJECT_ROOT
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-RUN cd $DATA_ROOT git clone https://github.com/tareknaous/readme.git
-
-# Задаем команду по умолчанию
-CMD ["python", "train.py"]
+RUN cd $DATA_ROOT && git clone https://github.com/tareknaous/readme.git

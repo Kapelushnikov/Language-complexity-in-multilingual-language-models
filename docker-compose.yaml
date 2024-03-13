@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  test_task:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    environment:
-      - PYTHONUNBUFFERED=1

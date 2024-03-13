@@ -34,6 +34,10 @@ MANIFEST
 *.DS_Store
 .DS_Store
 
+data/
+
+.dockerignore
+
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow
 __pypackages__/
 

@@ -1,7 +1,7 @@
 FROM python:3.10-slim
 
-ENV DATA_ROOT /data
 ENV PROJECT_ROOT /thesis
+ENV DATA_ROOT /thesis/data
 
 RUN mkdir -p $DATA_ROOT
 RUN mkdir -p $PROJECT_ROOT

@@ -1,0 +1,12 @@
+data:
+  path: ./data
+  batch_size: 20
+
+model:
+  type: BERT
+  learning_rate: 1e-5
+  eps: 1e-8
+
+training:
+  epochs: 5
+  log_interval: 1

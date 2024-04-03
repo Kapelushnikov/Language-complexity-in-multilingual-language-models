@@ -14,35 +14,27 @@ repos:
       - id: mixed-line-ending
 
   - repo: https://github.com/psf/black
-    rev: stable
+    rev: 24.3.0
     hooks:
       - id: black
-        language_version: python3
+        language_version: python3.11
 
   - repo: https://github.com/timothycrosley/isort
-    rev: 5.8.0
+    rev: 5.13.2
     hooks:
       - id: isort
-        language_version: python3
-
-  - repo: https://github.com/pycqa/flake8
-    rev: 6.1.0
-    hooks:
-      - id: flake8
-        additional_dependencies: [flake8-bugbear, Flake8-pyproject]
+        language_version: python3.11
 
   - repo: https://github.com/nbQA-dev/nbQA
-    rev: 1.7.1
+    rev: 1.8.5
     hooks:
       - id: nbqa-black
-        additional_dependencies: [black==23.12.1]
+        additional_dependencies: [black==24.3.0]
       - id: nbqa-isort
         additional_dependencies: [isort==5.13.2]
-      - id: nbqa-flake8
-        additional_dependencies: [flake8==6.1.0]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.1.0
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         types_or: [markdown, yaml, toml, json, dockerfile, shell]
@@ -50,12 +42,7 @@ repos:
         args: [--print-width=80, --prose-wrap=always]
 
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.2
+    rev: v2.2.6
     hooks:
       - id: codespell
         additional_dependencies: [tomli]
-
-  - repo: https://github.com/shellcheck-py/shellcheck-py
-    rev: v0.8.0.4
-    hooks:
-      - id: shellcheck

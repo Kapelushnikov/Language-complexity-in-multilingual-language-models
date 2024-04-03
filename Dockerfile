@@ -20,4 +20,7 @@ WORKDIR $PROJECT_ROOT
 
 RUN pip install --no-cache-dir -r requirements.txt
 
+RUN pre-commit install
+RUN dvc init
+
 RUN cd $DATA_ROOT && git clone https://github.com/tareknaous/readme.git

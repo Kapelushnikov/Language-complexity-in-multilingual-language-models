@@ -26,6 +26,10 @@ share/python-wheels/
 *.pyc
 MANIFEST
 
+# DVC
+/.dvc
+.dvcignore
+
 # Jupyter Notebook
 .ipynb_checkpoints
 .ipynb
@@ -36,6 +40,7 @@ MANIFEST
 
 data/
 
+# Docker
 .dockerignore
 
 # PEP 582; used by e.g. github.com/David-OConnor/pyflow

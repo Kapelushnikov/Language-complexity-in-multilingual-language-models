@@ -1,21 +1,20 @@
 [tool.poetry]
-name = "ds-project"
+name = "Language-complexity-in-multilingual-language-models"
 version = "0.1.0"
-description = "Template repository to start your Data Science or Machine Learning project from"
-authors = ["Vladilav Goncharenko <vladislav.goncharenko@phystech.edu>"]
-maintainers = ["Vladislav Goncharenko <vladislav.goncharenko@phystech.edu>"]
-readme = "README.md"
-repository = "https://github.com/v-goncharenko/data-science-template"
-documentation = "https://girafe.ai/"
-keywords = ["reproducibility", "data science", "machine learning", "template"]
-license = "Apache-2.0"
+description = "This work will help to gain more knowledge about BERT's hidden states and explore the connections between the model prediction process in different languages. This knowledge is useful for transferring learning to low-resource languages."
+authors = ["Kapelushnikov Andrey"]
 
 [tool.poetry.dependencies]
 python = "~3.11"
 
-[tool.poetry.group.dev.dependencies]
+[tool.poetry.dev-dependencies]
 pre-commit = "^3.6.0"
 pytest = "^7.4.4"
+black = "^24.3.0"
+isort = "^5.13.2"
+flake8 = "^7.0.0"
+flake8-bugbear = "^23.3.0"
+Flake8-pyproject = "^1.7.0"
 
 [tool.black]
 line-length = 90
@@ -23,33 +22,27 @@ target-version = ['py311']
 
 [tool.isort]
 profile = "black"
-
+src_paths = ["src", "tests"]
 
 [tool.flake8]
 max-line-length = 90
-ignore = ['E203', 'E501', 'W503', 'B950']
-max-complexity = 12
-select = ['B', 'C', 'E', 'F', 'W', 'B9']
+exclude = "__init__.py"
+select = ["E", "W", "F", "C", "B", "B950"]
+ignore = ["E501", "W503"]
 per-file-ignores = [
-    # for easier imports to __init__ without __all__
-    '**/__init__.py: F401',
-    # file to define custom types
-    'types.py: F401',
+    "__init__.py:F401",
 ]
-count = true
+
+[tool.nbqa.mutate]
+black = 1
+isort = 1
+flake8 = 0
 
 [tool.nbqa.config]
 black = "pyproject.toml"
 isort = "pyproject.toml"
 flake8 = "pyproject.toml"
 
-[tool.nbqa.addopts]
-flake8 = ["--extend-ignore=E402"]
-
-[tool.nbqa.mutate]
-black = 1
-isort = 1
-
 [build-system]
-requires = ["poetry-core"]
+requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"

@@ -3,11 +3,16 @@ import numpy as np
 import pytorch_lightning as pl
 import torch
 from omegaconf import DictConfig
+from pytorch_lightning.loggers import MLFlowLogger
 from sklearn.model_selection import train_test_split
 from torch.optim import AdamW
 from transformers import BertForSequenceClassification, get_linear_schedule_with_warmup
-
 from utils.load_dataset import load_data_ReadMe, make_dataloader_ReadMe
+
+# Инициализация MLflow Logger
+mlflow_logger = MLFlowLogger(
+    experiment_name="ReadMeClassification", tracking_uri="http://localhost:5000"
+)
 
 
 class ReadMeDataModule(pl.LightningDataModule):
@@ -47,6 +52,7 @@ class ReadMeModel(pl.LightningModule):
         }
         outputs = self.forward(**inputs)
         loss = outputs[0]
+        self.log("train_loss", loss)  # Логгирование потерь обучения
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -59,16 +65,8 @@ class ReadMeModel(pl.LightningModule):
         val_loss, logits = outputs[:2]
         preds = torch.argmax(logits, dim=1)
         labels = inputs["labels"]
+        self.log("val_loss", val_loss)  # Логгирование потерь валидации
         return {"val_loss": val_loss, "preds": preds, "labels": labels}
-
-    def configure_optimizers(self):
-        optimizer = AdamW(
-            self.parameters(), lr=self.hparams.learning_rate, eps=self.hparams.eps
-        )
-        scheduler = get_linear_schedule_with_warmup(
-            optimizer, num_warmup_steps=0, num_training_steps=1000
-        )  # Подберите подходящее значение
-        return [optimizer], [scheduler]
 
 
 @hydra.main(config_path="config", config_name="config")
@@ -89,7 +87,9 @@ def main(cfg: DictConfig):
 
     # Обучение
     trainer = pl.Trainer(
-        max_epochs=cfg.training.epochs, gpus=1 if torch.cuda.is_available() else 0
+        logger=mlflow_logger,
+        max_epochs=cfg.training.epochs,
+        gpus=1 if torch.cuda.is_available() else 0,
     )
     trainer.fit(model, datamodule=datamodule)
 

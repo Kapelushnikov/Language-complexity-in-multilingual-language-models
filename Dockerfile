@@ -15,6 +15,7 @@ RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
     python -m pip install -U pip==20.3.3
 
 COPY . $PROJECT_ROOT
+COPY ./data $DATA_ROOT
 
 WORKDIR $PROJECT_ROOT
 

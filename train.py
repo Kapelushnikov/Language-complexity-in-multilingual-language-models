@@ -5,8 +5,7 @@ import torch
 from omegaconf import DictConfig
 from pytorch_lightning.loggers import MLFlowLogger
 from sklearn.model_selection import train_test_split
-from torch.optim import AdamW
-from transformers import BertForSequenceClassification, get_linear_schedule_with_warmup
+from transformers import BertForSequenceClassification
 from utils.load_dataset import load_data_ReadMe, make_dataloader_ReadMe
 
 # Инициализация MLflow Logger
